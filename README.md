@@ -1,6 +1,7 @@
 <a href="https://www.navidrome.org"><img src="resources/logo-192x192.png" alt="Navidrome logo" title="navidrome" align="right" height="60px" /></a>
 
-# Navidrome Music Server &nbsp;[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Tired%20of%20paying%20for%20music%20subscriptions%2C%20and%20not%20finding%20what%20you%20really%20like%3F%20Roll%20your%20own%20streaming%20service%21&url=https://navidrome.org&via=navidrome)
+# Navidrome Music Server &nbsp;[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Tired%20of%20paying%20for%20music%20subscriptions%2C%20and%20not%20finding%20what%20you%20really%20like%3F%20Roll%20your%20own%20streaming%20service%21&url=https://navidrome.org&via=navidrome) (SSO Enhanced)
+This is a fork of Navidrome that includes a custom implementation for **Single Sign-On (SSO)**.
 
 [![Last Release](https://img.shields.io/github/v/release/navidrome/navidrome?logo=github&label=latest&style=flat-square)](https://github.com/navidrome/navidrome/releases)
 [![Build](https://img.shields.io/github/actions/workflow/status/navidrome/navidrome/pipeline.yml?branch=master&logo=github&style=flat-square)](https://nightly.link/navidrome/navidrome/workflows/pipeline/master)
@@ -40,6 +41,10 @@ See instructions on the [project's website](https://www.navidrome.org/docs/insta
 A share of the revenue helps fund the development of Navidrome at no additional cost for you.
 
 [![PikaPods](https://www.pikapods.com/static/run-button.svg)](https://www.pikapods.com/pods?run=navidrome)
+
+## New Features:
+- **Header-based Authentication:** Integration with providers like Keycloak, Authelia, Authentik, and Cloudflare Access.
+- **Custom SSO Provider:** New authentication adapter for seamless enterprise integration.
 
 ## Features
  
