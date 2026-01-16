@@ -42,9 +42,9 @@ A share of the revenue helps fund the development of Navidrome at no additional 
 
 [![PikaPods](https://www.pikapods.com/static/run-button.svg)](https://www.pikapods.com/pods?run=navidrome)
 
-## New Features:
-- **Header-based Authentication:** Integration with providers like Keycloak, Authelia, Authentik, and Cloudflare Access.
-- **Custom SSO Provider:** New authentication adapter for seamless enterprise integration.
+## New Feature:
+
+- **Custom SSO Provider:** Integration with providers like Keycloak, Authelia, Authentik, and Cloudflare Access.
 
 ## Features
  
