@@ -173,6 +173,20 @@ const FormLogin = ({ loading, handleSubmit, validate }) => {
                   {translate('ra.auth.sign_in')}
                 </Button>
               </CardActions>
+              {config.oidcEnabled && (
+                <CardActions className={classes.actions} style={{ paddingTop: 0 }}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    disabled={loading}
+                    className={classes.button}
+                    fullWidth
+                    onClick={() => (window.location.href = '/auth/login/oidc')}
+                  >
+                    {translate('ra.auth.sign_in_sso', { _: 'Login with SSO' })}
+                  </Button>
+                </CardActions>
+              )}
             </Card>
             <Notification />
           </div>
@@ -340,8 +354,19 @@ const Login = ({ location }) => {
     [dispatch, login, notify, setLoading, location],
   )
 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const token = params.get('token')
+    if (token) {
+      handleSubmit({ token })
+    }
+  }, [location.search, handleSubmit])
+
   const validateLogin = useCallback(
     (values) => {
+      if (values.token) {
+        return {}
+      }
       const errors = {}
       if (!values.username) {
         errors.username = translate('ra.validation.required')

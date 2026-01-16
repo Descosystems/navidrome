@@ -27,16 +27,27 @@ function storeAuthenticationInfo(authInfo) {
 }
 
 const authProvider = {
-  login: ({ username, password }) => {
-    let url = baseUrl('/auth/login')
-    if (config.firstTime) {
-      url = baseUrl('/auth/createAdmin')
+  login: ({ username, password, token }) => {
+    let request
+    if (token) {
+      request = new Request(baseUrl('/auth/session'), {
+        method: 'GET',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          'X-ND-Authorization': `Bearer ${token}`,
+        }),
+      })
+    } else {
+      let url = baseUrl('/auth/login')
+      if (config.firstTime) {
+        url = baseUrl('/auth/createAdmin')
+      }
+      request = new Request(url, {
+        method: 'POST',
+        body: JSON.stringify({ username, password }),
+        headers: new Headers({ 'Content-Type': 'application/json' }),
+      })
     }
-    const request = new Request(url, {
-      method: 'POST',
-      body: JSON.stringify({ username, password }),
-      headers: new Headers({ 'Content-Type': 'application/json' }),
-    })
     return fetch(request)
       .then((response) => {
         if (response.status < 200 || response.status >= 300) {

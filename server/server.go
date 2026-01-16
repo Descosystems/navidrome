@@ -40,6 +40,9 @@ func New(ds model.DataStore, broker events.Broker, insights metrics.Insights) *S
 	s := &Server{ds: ds, broker: broker, insights: insights}
 	initialSetup(ds)
 	auth.Init(s.ds)
+	if err := initOIDC(); err != nil {
+		log.Error("Could not initialize OIDC", err)
+	}
 	s.initRoutes()
 	s.mountAuthenticationRoutes()
 	s.mountRootRedirector()
@@ -217,6 +220,11 @@ func (s *Server) mountAuthenticationRoutes() chi.Router {
 			r.Post("/login", login(s.ds))
 		}
 		r.Post("/createAdmin", createAdmin(s.ds))
+		if conf.Server.OIDC.Enabled {
+			r.Get("/login/oidc", loginOIDC)
+			r.Get("/callback/oidc", callbackOIDC(s.ds))
+		}
+		r.With(Authenticator(s.ds)).Get("/session", getSession(s.ds))
 	})
 }
 

@@ -369,3 +369,23 @@ func validateIPAgainstList(ip string, comaSeparatedList string) bool {
 
 	return false
 }
+
+func getSession(ds model.DataStore) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		user, ok := request.UserFrom(r.Context())
+		if !ok {
+			log.Error(r, "Error getting user from context", "error", "User not found in context")
+			_ = rest.RespondWithError(w, http.StatusUnauthorized, "Unauthorized")
+			return
+		}
+
+		payload := buildAuthPayload(&user)
+		// Refresh token
+		newToken, err := auth.CreateToken(&user)
+		if err == nil {
+			payload["token"] = newToken
+		}
+
+		_ = rest.RespondWithJSON(w, http.StatusOK, payload)
+	}
+}

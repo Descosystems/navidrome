@@ -88,6 +88,7 @@ type configOptions struct {
 	AuthWindowLength                time.Duration
 	PasswordEncryptionKey           string
 	ExtAuth                         extAuthOptions
+	OIDC                            OIDCOptions `json:",omitzero"`
 	Plugins                         pluginsOptions
 	HTTPHeaders                     httpHeaderOptions   `json:",omitzero"`
 	Prometheus                      prometheusOptions   `json:",omitzero"`
@@ -236,6 +237,16 @@ type pluginsOptions struct {
 type extAuthOptions struct {
 	TrustedSources string
 	UserHeader     string
+}
+
+type OIDCOptions struct {
+	Enabled      bool   `json:",omitempty"`
+	Issuer       string `json:",omitempty"`
+	ClientID     string `json:",omitempty"`
+	ClientSecret string `json:",omitempty"`
+	RedirectURL  string `json:",omitempty"`
+	Scope        string `json:",omitempty"`
+	UserCreation bool   `json:",omitempty"`
 }
 
 var (
@@ -589,6 +600,13 @@ func setViperDefaults() {
 	viper.SetDefault("passwordencryptionkey", "")
 	viper.SetDefault("extauth.userheader", "Remote-User")
 	viper.SetDefault("extauth.trustedsources", "")
+	viper.SetDefault("oidc.enabled", false)
+	viper.SetDefault("oidc.issuer", "")
+	viper.SetDefault("oidc.clientid", "")
+	viper.SetDefault("oidc.clientsecret", "")
+	viper.SetDefault("oidc.redirecturl", "")
+	viper.SetDefault("oidc.scope", "openid profile email")
+	viper.SetDefault("oidc.usercreation", true)
 	viper.SetDefault("prometheus.enabled", false)
 	viper.SetDefault("prometheus.metricspath", consts.PrometheusDefaultPath)
 	viper.SetDefault("prometheus.password", "")
